@@ -1,4 +1,8 @@
 #!/bin/bash
 templateUrl="file://${WORKSPACE}/template/kms.yaml"
 
-aws cloudformation '${action}'-stack --stack-name '${stackName}' --template-body "${templateUrl}" --capabilities CAPABILITY_NAMED_IAM
+echo "!!!!!!!!!!!!! ${action} of ${environment}-${stackName} stack is initiated !!!!!!!!!!!!!!!!!!!!!!!!"
+aws cloudformation "${action}"-stack \
+--template-body "${templateUrl}" --region "${aws_region}" \
+--stack-name "${environment}-${stackName}" \
+--capabilities CAPABILITY_NAMED_IAM
