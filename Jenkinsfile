@@ -27,7 +27,7 @@ pipeline {
         
         stage('Infra-Creation') {
             steps {
-                
+              sh 'chmod +x ${WORKSPACE}/assumerole.sh'
               sh(script:'${WORKSPACE}/assumerole.sh')
             }
         }
