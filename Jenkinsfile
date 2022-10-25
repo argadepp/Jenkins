@@ -25,11 +25,11 @@ pipeline {
    
 
         
-        stage('Infra-Creation') {
+        stage('Check-Kms') {
             steps {
               withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
-              sh 'chmod +x ${WORKSPACE}/lists3.sh'
-              sh(script: "${WORKSPACE}/lists3.sh")
+              sh 'chmod +x ${WORKSPACE}/check-kms.sh'
+              sh(script: "${WORKSPACE}/check-kms.sh")
               }
             }
         }
