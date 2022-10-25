@@ -27,11 +27,9 @@ pipeline {
         
         stage('Infra-Creation') {
             steps {
-              sh 'chmod +x ${WORKSPACE}/assumerole.sh'
-              
-              sh(script:'${WORKSPACE}/assumerole.sh')
-              sh 'cat ${WORKSPACE}/assume-role-output.json'
-              sh(script:'${WORKSPACE}/lists3.sh')  
+              withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
+              sh(script: "${WORKSPACE}/lists3.sh')
+              }
             }
         }
     }
