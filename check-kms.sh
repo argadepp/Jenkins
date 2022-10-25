@@ -1,6 +1,4 @@
 #!/bin/bash
+templateUrl="file://${WORKSPACE}/template/kms.yaml"
 
-opt = aws kms describe-key --key-id alias/eks-ebs-encrypt-key | grep arn | awk '{print $2}' | tr '",' ' '
-
-echo $opt
-
+aws '${action}'-stack --stack-name '${stackName}' --template-body "${templateUrl}" --capabilities CAPABILITY_NAMED_IAM
