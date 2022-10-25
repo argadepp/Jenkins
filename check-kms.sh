@@ -17,5 +17,14 @@ else
     --template-body "${templateUrl}" --region "${aws_region}" \
     --stack-name "${environment}-${stackName}" \
     --capabilities CAPABILITY_NAMED_IAM
+    
+    echo "Waiting for the '${action}' operation to complete on CloudFormation stack: ${environment}-${stackName}"
+    aws cloudformation wait stack-${action}-complete \
+    --stack-name ${environment}-${stackName} \
+    --region ${aws_region}
+    
+    echo "${stackName} is created successfully !!!!!!!!!!!!!!!!" 
 fi
+
+
 
