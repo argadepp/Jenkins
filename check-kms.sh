@@ -1,5 +1,5 @@
 #!/bin/bash
-templateUrl="file://${WORKSPACE}/template/kms.yaml"
+templateUrl="file://${WORKSPACE}/kms.yaml"
 
 echo "!!!!!!!!!!!!! ${action} of ${environment}-${stackName} stack is initiated !!!!!!!!!!!!!!!!!!!!!!!!"
 aws cloudformation "${action}"-stack \
