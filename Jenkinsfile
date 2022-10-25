@@ -28,7 +28,7 @@ pipeline {
         stage('Infra-Creation') {
             steps {
               withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
-              sh(script: "${WORKSPACE}/lists3.sh')
+              sh(script: "${WORKSPACE}/lists3.sh")
               }
             }
         }
