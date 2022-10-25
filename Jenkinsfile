@@ -29,6 +29,7 @@ pipeline {
             steps {
               sh 'chmod +x ${WORKSPACE}/assumerole.sh'
               sh(script:'${WORKSPACE}/assumerole.sh')
+              sh(script:'${WORKSPACE}/lists3.sh')  
             }
         }
     }
