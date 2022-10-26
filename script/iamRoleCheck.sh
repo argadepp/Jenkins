@@ -19,15 +19,15 @@ else
     echo "!!!!!!!!!!!!! ${action} of ${environment}-${stackName} stack is initiated !!!!!!!!!!!!!!!!!!!!!!!!"
     aws cloudformation "${action}"-stack \
     --template-body "${templateUrl}" --region "${aws_region}" \
-    --stack-name "${environment}-${stackName}" --parameters ParameterKey=Product,ParameterValue="${Product}" ParameterKey=ClusterName,ParameterValue="${ClusterName}" ParameterKey=Environment,ParameterValue="${environment}" \
+    --stack-name "kms-${environment}-${stackName}" --parameters ParameterKey=Product,ParameterValue="${Product}" ParameterKey=ClusterName,ParameterValue="${ClusterName}" ParameterKey=Environment,ParameterValue="${environment}" \
     --capabilities CAPABILITY_NAMED_IAM
     
     echo "Waiting for the '${action}' operation to complete on CloudFormation stack: ${environment}-${stackName}"
     aws cloudformation wait stack-${action}-complete \
-    --stack-name ${environment}-${stackName} \
+    --stack-name "kms-${environment}-${stackName}" \
     --region ${aws_region}
     
-    echo "${stackName} is created successfully !!!!!!!!!!!!!!!!"
+    echo "kms-${environment}-${stackName} is created successfully !!!!!!!!!!!!!!!!"
     
     
 
