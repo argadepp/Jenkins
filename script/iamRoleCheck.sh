@@ -1,7 +1,7 @@
 #!/bin/bash
 roleName=$1
 instanceRole=$2
-
+echo "Checking IAM Roles"
 myCmd=(aws iam get-role --role-name $roleName)
 instCheck=(aws iam get-role --role-name $instanceRole)
 if "${myCmd[@]}" > myJson.file 2> error.file; then
