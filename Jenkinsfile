@@ -34,7 +34,7 @@ pipeline {
               sh 'chmod +x ${WORKSPACE}/script/iamRoleCheck.sh'
                           sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole} ${ClusterName} ")    
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
-                  sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey}")
+                  sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey} ${serviceRole} ${instanceRole}")
                          }
               }
             }
