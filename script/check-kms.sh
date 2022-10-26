@@ -10,7 +10,7 @@ else
     err="$(cat error.file)"
     echo "It's not present , creation is initiated !!!!!!!!!"
 
-    templateUrl="file://${WORKSPACE}/kms.yaml"
+    templateUrl="file://${WORKSPACE}/template/kms.yaml"
 
     echo "!!!!!!!!!!!!! ${action} of ${environment}-${stackName} stack is initiated !!!!!!!!!!!!!!!!!!!!!!!!"
     aws cloudformation "${action}"-stack \
