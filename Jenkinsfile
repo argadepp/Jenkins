@@ -22,18 +22,20 @@ pipeline {
         
         stage('Check-Kms') {
             steps {
-                script { def ClusterName = "eks-${Product}-${environment}"
+                 
+                       
+              withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
+                  script { def ClusterName = "eks-${Product}-${environment}"
                         echo "${ClusterName}"
                     def instanceRole = "${ClusterName}-instance-role"  
                         echo "${instanceRole}"
                         def serviceRole = "${ClusterName}-service-role" 
                         echo "${serviceRole}"
-                       }
-              withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
               sh 'chmod +x ${WORKSPACE}/script/iamRoleCheck.sh'
                   sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole}")    
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
                   sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey}")
+                         }
               }
             }
         }
