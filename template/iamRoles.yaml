@@ -20,7 +20,7 @@ Resources:
   ServiceRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub "${ClusterName}-${Product}-${Environment}-service-role"
+      RoleName: !Sub "${ClusterName}-service-role"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -38,7 +38,7 @@ Resources:
   InstanceRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub "${ClusterName}-${Product}-${Environment}-instance-role"
+      RoleName: !Sub "${ClusterName}-instance-role"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
