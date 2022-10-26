@@ -51,7 +51,6 @@ Resources:
               - "sts:AssumeRole"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEC2FullAccess
-        - arn:aws:iam::aws:policy/AmazonEC2RoleforSSM
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy 
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess 
         - arn:aws:iam::aws:policy/AmazonS3FullAccess 
