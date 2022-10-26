@@ -1,1 +1,60 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: IAM Roles Create Template
 
+Parameters:
+  ClusterName:
+    Description: Name of the EKS Cluster
+    Type: String
+    Default: ""
+
+  Product:
+    Description: Product Name like Hotel/Car/Cart/Flight/Revenut/OCL
+    Type: String
+
+  Environment:
+    Description: Which Environment this resource is going to be created
+    Type: String
+
+Resources:
+  ServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${ClusterName}-${Product}-${Environment}-service-role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "ec2.amazonaws.com" 
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+        - arn:aws:iam::aws:policy/AmazonEKSServicePolicy
+
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${ClusterName}-${Product}-${Environment}-instance-role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "ec2.amazonaws.com" 
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2FullAccess
+        - arn:aws:iam::aws:policy/AmazonEC2RoleforSSM
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy 
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess 
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess 
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore 
+        - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess 
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy       
