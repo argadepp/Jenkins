@@ -38,4 +38,8 @@ else
     --region ${aws_region}
     
     echo "${stackName} is created successfully !!!!!!!!!!!!!!!!" 
+    
+    "${myCmd1[@]}" > myJson.file
+    arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
+    echo "Arn of KMS Key is =$arn"
 fi
