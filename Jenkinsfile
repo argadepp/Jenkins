@@ -30,10 +30,10 @@ pipeline {
                         echo "${serviceRole}"
                        }
               withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
-              sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
+              sh 'chmod +x ${WORKSPACE}/script/iamRoleCheck.sh'
                   sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole}")    
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
-                  sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${kmsKey}")
+                  sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey}")
               }
             }
         }
