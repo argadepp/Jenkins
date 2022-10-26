@@ -57,4 +57,11 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonS3FullAccess 
         - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore 
         - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess 
-        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy       
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy      
+Outputs:
+  InstanceRole:
+    Value: !Ref InstanceRole
+  
+  ServiceRole:
+    Value: !Ref ServiceRole
+        
