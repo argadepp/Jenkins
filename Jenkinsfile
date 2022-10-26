@@ -32,7 +32,7 @@ pipeline {
                         def serviceRole = "${ClusterName}-service-role" 
                         echo "${serviceRole}"
               sh 'chmod +x ${WORKSPACE}/script/iamRoleCheck.sh'
-                  sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole}")    
+                          sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole} ${ClusterName} ")    
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
                   sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey}")
                          }
