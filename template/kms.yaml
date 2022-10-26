@@ -1,4 +1,10 @@
 ---
+Parameters:
+  ServiceRole: 
+    Type: String
+
+  InstanceRole:
+    Type: String
 Resources:
   myAlias:
     Type: 'AWS::KMS::Alias'
@@ -28,8 +34,8 @@ Resources:
             Effect: Allow
             Principal:
               AWS: 
-                - 'arn:aws:iam::895321766589:user/Pratik_Argade'
-                - 'arn:aws:iam::895321766589:user/Vishal_bobade'
+                - !Ref ServiceRole
+                - !Ref InstanceRole
             Action:
               - 'kms:Create*'
               - 'kms:Describe*'
@@ -48,8 +54,8 @@ Resources:
             Effect: Allow
             Principal:
               AWS: 
-                - 'arn:aws:iam::895321766589:user/Pratik_Argade'
-                - 'arn:aws:iam::895321766589:user/Vishal_bobade'
+                - !Ref ServiceRole
+                - !Ref InstanceRole
             Action:
               - 'kms:DescribeKey'
               - 'kms:Encrypt'
@@ -62,8 +68,45 @@ Resources:
             Effect: Allow
             Principal:
               AWS: 
-                - 'arn:aws:iam::895321766589:user/Pratik_Argade'
-                - 'arn:aws:iam::895321766589:user/Vishal_bobade'
+                - !Ref ServiceRole
+                - !Ref InstanceRole
+            Action: 
+              - 'kms:CreateGrant'
+              - 'kms:ListGrants'
+              - 'kms:RevokeGrant'
+            Resource: '*'
+          
+              - 'kms:Enable*'
+              - 'kms:List*'
+              - 'kms:Put*'
+              - 'kms:Update*'
+              - 'kms:Revoke*'
+              - 'kms:Disable*'
+              - 'kms:Get*'
+              - 'kms:Delete*'
+              - 'kms:ScheduleKeyDeletion'
+              - 'kms:CancelKeyDeletion'
+            Resource: '*'
+          - Sid: Allow use of the key
+            Effect: Allow
+            Principal:
+              AWS: 
+                - !Ref ServiceRole
+                - !Ref InstanceRole
+            Action:
+              - 'kms:DescribeKey'
+              - 'kms:Encrypt'
+              - 'kms:Decrypt'
+              - 'kms:ReEncrypt*'
+              - 'kms:GenerateDataKey'
+              - 'kms:GenerateDataKeyWithoutPlaintext'
+            Resource: '*'
+          - Sid: Allow attachment of persistent resources
+            Effect: Allow
+            Principal:
+              AWS: 
+                - !Ref ServiceRole
+                - !Ref InstanceRole
             Action: 
               - 'kms:CreateGrant'
               - 'kms:ListGrants'
