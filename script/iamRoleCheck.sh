@@ -14,7 +14,7 @@ if ("${myCmd[@]}" > myJson.file 2> error.file) & ("${instCheck[@]}" > myJson1.fi
 else
     err="$(cat error.file)"
     echo "It's not present , creation is initiated !!!!!!!!!"
-    templateUrl="file://${WORKSPACE}/template/iamRole.yaml"
+    templateUrl="file://${WORKSPACE}/template/iamRoles.yaml"
   
     echo "!!!!!!!!!!!!! ${action} of ${environment}-${stackName} stack is initiated !!!!!!!!!!!!!!!!!!!!!!!!"
     aws cloudformation "${action}"-stack \
