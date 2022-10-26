@@ -1,6 +1,7 @@
 #!/bin/bash
 roleName=$1
 instanceRole=$2
+ClusterName=$3
 echo "Checking IAM Roles"
 myCmd=(aws iam get-role --role-name $roleName)
 instCheck=(aws iam get-role --role-name $instanceRole)
