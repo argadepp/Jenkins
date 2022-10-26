@@ -12,7 +12,6 @@ pipeline {
          choice(name: 'environment', choices: ['dev', 'qa','prod'], description: '')
          choice(name: 'Product',choices: ['travel', 'pci','client'], description: '')
          string(name: 'aws_region', defaultValue: 'ap-south-1' , description: 'AWS Region' )
-         string(name: 'ClusterName')
          string(name: 'stackName',defaultValue: 'asg')
          string(name: 'kmsKey' , defaultValue: 'eks-ebs-encrypt-key')
          string(name: 'templateUrl',defaultValue: 'https://cf-templates-g2cqbboygucc-ap-south-1.s3.ap-south-1.amazonaws.com/asg.yaml')
@@ -23,7 +22,8 @@ pipeline {
         
         stage('Check-Kms') {
             steps {
-                script { def instanceRole = "${ClusterName}-${Product}-${Environment}-instance-role"  
+                script { def ClusterName = "${ClusterName}-${Product}-${Environment}"
+                    def instanceRole = "${ClusterName}-${Product}-${Environment}-instance-role"  
                         def serviceRole = "${ClusterName}-${Product}-${Environment}-service-role" }
               withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
