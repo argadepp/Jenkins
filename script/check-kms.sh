@@ -12,7 +12,7 @@ arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
 echo "Service Role Arn=$arn"
 
 "${instCheck[@]}" > myJson1.file
- arn1=$(cat $PWD/myJson1.file | grep arn | awk '{print $2}' | tr '",' ' ') 
+ arn1=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ') 
  echo "InstanceRole Arn=$arn1"
 ######################################
 myCmd1=(aws kms describe-key --key-id alias/$id)
@@ -20,6 +20,8 @@ if "${myCmd1[@]}" > myJson.file 2> error.file; then
    echo "Present"
     arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
    echo "Arn=$arn"
+
+    sh ./editpolicy.sh roleName instanceRole
 else
     err="$(cat error.file)"
     echo "It's not present , creation is initiated !!!!!!!!!"
@@ -38,8 +40,5 @@ else
     --region ${aws_region}
     
     echo "${stackName} is created successfully !!!!!!!!!!!!!!!!" 
-    
-    "${myCmd1[@]}" > myJson.file
-    arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
-    echo "Arn of KMS Key is =$arn"
 fi
+
