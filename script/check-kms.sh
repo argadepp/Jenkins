@@ -20,6 +20,9 @@ if "${myCmd1[@]}" > myJson.file 2> error.file; then
    echo "Present"
     arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
    echo "Arn=$arn"
+    keyId=$(cat $PWD/myJson.file | grep "KeyId" | awk '{print $2}' | tr '",' ' ')
+
+    sh ./editpolicy.sh $roleName $instanceRole $keyId
 
     sh $PWD/script/editpolicy.sh $roleName $instanceRole $id
 else
