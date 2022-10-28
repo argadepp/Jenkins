@@ -8,6 +8,7 @@ echo "$?"
 echo $check
 if [ $? -eq 0 ]
 then
+  echo $PWD
   inst=$(jq  '.Statement[1].Principal.AWS[]' $PWD/policy.json)
   echo $inst
   instRole="arn:aws:iam::895321766589:role/$instRole"
