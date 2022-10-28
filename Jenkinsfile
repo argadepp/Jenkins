@@ -22,6 +22,7 @@ pipeline {
         
             stage('Initialize AWS credentials') {
         steps {
+        sh 'chmod +x ${WORKSPACE}/script/assume_deploy_role.sh'    
         sh(script:'${WORKSPACE}/script/assume_deploy_role.sh', label: 'Get the assume role credentials')
         script {
             def assumeRoleOutputFile = "${WORKSPACE}/script/assume-role-output.json"
