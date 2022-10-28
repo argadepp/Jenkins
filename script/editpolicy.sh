@@ -9,7 +9,7 @@ echo $check
 if [ $? -eq 0 ]
 then
   inst=$(jq  '.Statement[1].Principal.AWS[]' $PWD/policy.json)
-  #echo $inst
+  echo $inst
   instRole="arn:aws:iam::895321766589:role/$instRole"
   serviceRole="arn:aws:iam::895321766589:role/$serviceRole"
   newinst=$(jq '.Statement[2].Principal.AWS[.Statement[2].Principal.AWS | length] |= . + "'$instRole'"'  $PWD/policy.json > $PWD/new.json)
