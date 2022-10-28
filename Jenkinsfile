@@ -20,6 +20,19 @@ pipeline {
    
 
         
+            stage('Initialize AWS credentials') {
+        steps {
+        sh(script:'${WORKSPACE}/script/assume_deploy_role.sh', label: 'Get the assume role credentials')
+        script {
+            def assumeRoleOutputFile = "${WORKSPACE}/script/assume-role-output.json"
+            env.AWS_ACCESS_KEY_ID = getCommandOutput("jq -r '.Credentials.AccessKeyId' ${assumeRoleOutputFile}", 'Get AccessKeyId')
+            env.AWS_SECRET_ACCESS_KEY = getCommandOutput("jq -r '.Credentials.SecretAccessKey' ${assumeRoleOutputFile}", 'Get SecretAccessKey')
+            env.AWS_SESSION_TOKEN = getCommandOutput("jq -r '.Credentials.SessionToken' ${assumeRoleOutputFile}", 'Get SessionToken')
+            sh(script: 'aws sts get-caller-identity', label: 'STS GetCallerIdentity')
+        }
+        }
+    }
+        
         stage('Check-Kms') {
             steps {
                  
