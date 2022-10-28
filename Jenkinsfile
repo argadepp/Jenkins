@@ -18,21 +18,6 @@ pipeline {
     }  
     stages {
    
-
-        
-//      stage('Initialize AWS credentials') {
-//         steps {
-//         sh 'chmod +x ${WORKSPACE}/script/assume_deploy_role.sh'    
-//         sh(script:'${WORKSPACE}/script/assume_deploy_role.sh', label: 'Get the assume role credentials')
-// //         script {
-// //             def assumeRoleOutputFile = "${WORKSPACE}/assume-role-output.json"
-// //             env.AWS_ACCESS_KEY_ID = getCommandOutput("jq -r '.Credentials.AccessKeyId' ${assumeRoleOutputFile}", 'Get AccessKeyId')
-// //             env.AWS_SECRET_ACCESS_KEY = getCommandOutput("jq -r '.Credentials.SecretAccessKey' ${assumeRoleOutputFile}", 'Get SecretAccessKey')
-// //             //env.AWS_SESSION_TOKEN = getCommandOutput("jq -r '.Credentials.SessionToken' ${assumeRoleOutputFile}", 'Get SessionToken')
-// //             sh(script: 'aws sts get-caller-identity', label: 'STS GetCallerIdentity')
-// //         }
-//         }
-//     }
         
         stage('Check-Kms') {
             steps {
@@ -46,7 +31,9 @@ pipeline {
                         def serviceRole = "${ClusterName}-service-role" 
                         echo "${serviceRole}"
               sh 'chmod +x ${WORKSPACE}/script/iamRoleCheck.sh'
+                          
                           sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole} ${ClusterName} ")    
+              sh 'chmod +x ${WORKSPACE}/script/editpolicy.sh'            
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
                   sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey} ${serviceRole} ${instanceRole}")
                          }  
