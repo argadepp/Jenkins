@@ -38,7 +38,7 @@ pipeline {
             steps {
                  
                        
-         
+               withAWS(credentials: 'AWSCred' , region: 'ap-south-1') {
                   script { def ClusterName = "eks-${Product}-${environment}"
                         echo "${ClusterName}"
                     def instanceRole = "${ClusterName}-instance-role"  
@@ -49,7 +49,7 @@ pipeline {
                           sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole} ${ClusterName} ")    
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
                   sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey} ${serviceRole} ${instanceRole}")
-                    
+                         }  
               }
             }
         }
