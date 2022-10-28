@@ -19,7 +19,7 @@ then
   newinst=$(jq '.Statement[3].Principal.AWS[.Statement[3].Principal.AWS | length] |= . + "'$instRole'"'  $PWD/final.json > $PWD/new.json )
 
   service=$(jq '.Statement[3].Principal.AWS[.Statement[3].Principal.AWS | length] |= . + "'$serviceRole'"'  $PWD/new.json > $PWD/policy.json)
-  aws kms get-key-policy --key-id  $id --policy-name default --output text > $PWD/policy.json
+  changePolicy=$(aws kms get-key-policy --key-id  $id --policy-name default --output text > $PWD/policy.json)
 else
     echo "already present !!!!!!!!!!!"
 fi
