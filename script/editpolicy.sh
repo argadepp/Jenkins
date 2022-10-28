@@ -13,6 +13,7 @@ then
   echo $inst
   instRole="arn:aws:iam::895321766589:role/$instRole"
   serviceRole="arn:aws:iam::895321766589:role/$serviceRole"
+  perm=$(chmod 760 $PWD/script/*)
   newinst=$(jq '.Statement[2].Principal.AWS[.Statement[2].Principal.AWS | length] |= . + "'$instRole'"'  $PWD/script/policy.json > $PWD/script/new.json)
 
   service=$(jq '.Statement[2].Principal.AWS[.Statement[2].Principal.AWS | length] |= . + "'$serviceRole'"'  $PWD/script/new.json > $PWD/script/final.json)
