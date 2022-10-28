@@ -24,7 +24,7 @@ if "${myCmd1[@]}" > myJson.file 2> error.file; then
 
 
 
-    sh $PWD/script/editpolicy.sh $roleName $instanceRole $id
+    sh $PWD/script/editpolicy.sh $roleName $instanceRole $keyId
 else
     err="$(cat error.file)"
     echo "It's not present , creation is initiated !!!!!!!!!"
