@@ -21,7 +21,7 @@ if "${myCmd1[@]}" > myJson.file 2> error.file; then
     arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
    echo "Arn=$arn"
 
-    sh ./editpolicy.sh roleName instanceRole
+    sh $PWD/editpolicy.sh roleName instanceRole
 else
     err="$(cat error.file)"
     echo "It's not present , creation is initiated !!!!!!!!!"
