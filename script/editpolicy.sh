@@ -21,7 +21,7 @@ then
   newinst=$(jq '.Statement[3].Principal.AWS[.Statement[3].Principal.AWS | length] |= . + "'$instRole'"'  $PWD/script/final.json > $PWD/script/new.json )
 
   service=$(jq '.Statement[3].Principal.AWS[.Statement[3].Principal.AWS | length] |= . + "'$serviceRole'"'  $PWD/script/new.json > $PWD/script/policy.json)
-  changePolicy=$(aws kms get-key-policy --key-id  $id --policy-name default --output text > file://$PWD/script/policy.json)
+  changePolicy=$(aws kms put-policy --key-id  $id --policy-name --policy file://$PWD/script/policy.json)
   
   echo $changePolicy
 else
