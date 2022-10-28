@@ -8,8 +8,8 @@ role="arn:aws:iam::895321766589:role/awspratik-admin-role"
 #     --role-session-name TemporarySessionKeys \
 #     --output json > assume-role-output1.json
 
-access_key=$(cat /home/ubuntu/.aws/credentials | grep aws_access_key_id | awk '{print $3}')
-secret_key=$(cat /home/ubuntu/.aws/credentials | grep aws_secret_access_key | awk '{print $3}')
+access_key=$(cat '${WORKSPACE}/assume-role-output.json' | grep aws_access_key_id | awk '{print $3}')
+secret_key=$(cat '${WORKSPACE}/assume-role-output.json's | grep aws_secret_access_key | awk '{print $3}')
 
 aws configure aws_access_key_id $access_key aws_secret_access_key $secret_key
 
