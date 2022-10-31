@@ -2,6 +2,7 @@
 id=$1
 roleName=$2
 instanceRole=$3
+accountNumber=$4
 
 ######### Check IAM ##################
 myCmd=(aws iam get-role --role-name $roleName)
@@ -24,7 +25,7 @@ if "${myCmd1[@]}" > myJson.file 2> error.file; then
 
 
 
-    sh $PWD/script/editpolicy.sh $roleName $instanceRole $keyId
+    sh $PWD/script/editpolicy.sh $roleName $instanceRole $keyId $accountNumber
 else
     err="$(cat error.file)"
     echo "It's not present , creation is initiated !!!!!!!!!"
