@@ -17,7 +17,7 @@ echo "Service Role Arn=$arn"
  echo "InstanceRole Arn=$arn1"
 ######################################
 myCmd1=(aws kms describe-key --key-id alias/$id)
-if "${myCmd1[@]}" > myJson.file 2> error.file; then
+if "${myCmd1[@]}" > $PWD/myJson.file 2> error.file; then
    echo "Present"
     kmsarn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
     echo "KMS Arn=$kmsarn"
