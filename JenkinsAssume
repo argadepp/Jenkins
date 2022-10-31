@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    environment {
+        aws_region = "${params.aws_region}"
+        
+    }
+    parameters {
+        
+       
+         booleanParam(name: 'Refresh', defaultValue: false , description: 'Refresh this Job')
+         choice(name: 'action' ,  choices: ['create','update'] , description: 'action regarding thr stack create or update , choose as per the requirment' )
+         choice(name: 'environment', choices: ['dev', 'qa','prod'], description: '')
+         choice(name: 'Product',choices: ['travel', 'pci','client'], description: '')
+         string(name: 'aws_region', defaultValue: 'ap-south-1' , description: 'AWS Region' )
+         string(name: 'stackName',defaultValue: 'asg')
+         string(name: 'kmsKey' , defaultValue: 'eks-ebs-encrypt-key')
+         string(name: 'templateUrl',defaultValue: 'https://cf-templates-g2cqbboygucc-ap-south-1.s3.ap-south-1.amazonaws.com/asg.yaml')
+    }  
+    stages {
+   
+        
+      stage('Initialize AWS credentials') {
+        steps {
+        sh(script:'${WORKSPACE}/scripts/assumerole.sh', label: 'Get the assume role credentials')
+        script {
+            def assumeRoleOutputFile = "${WORKSPACE}/scripts/assume-role-output.json"
+            env.AWS_ACCESS_KEY_ID = getCommandOutput("jq -r '.Credentials.AccessKeyId' ${assumeRoleOutputFile}", 'Get AccessKeyId')
+            env.AWS_SECRET_ACCESS_KEY = getCommandOutput("jq -r '.Credentials.SecretAccessKey' ${assumeRoleOutputFile}", 'Get SecretAccessKey')
+            env.AWS_SESSION_TOKEN = getCommandOutput("jq -r '.Credentials.SessionToken' ${assumeRoleOutputFile}", 'Get SessionToken')
+            sh(script: 'aws sts get-caller-identity', label: 'STS GetCallerIdentity')
+        }
+        }
+    }
+      def getCommandOutput(command, label=null) {
+    if (label == null) {
+    label = command.split()[0]
+    }
+    return sh(script: "${command}", label: label, returnStdout: true).trim()  
+       
+    }
+}
