@@ -29,7 +29,7 @@ pipeline {
             env.AWS_SESSION_TOKEN = getCommandOutput("jq -r '.Credentials.SessionToken' ${assumeRoleOutputFile}", 'Get SessionToken')
             sh(script: 'aws sts get-caller-identity', label: 'STS GetCallerIdentity')
         }
-        }
+        } }
          
       def getCommandOutput(command, label=null) {
     if (label == null) {
