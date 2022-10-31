@@ -27,6 +27,10 @@ then
   changePolicy=$(aws kms put-key-policy --key-id  $id --policy-name default --policy file://policy.json)
   
   echo $changePolicy
+  
+  if [ $? == 0 ]
+  then
+    echo "Succesfully updated !!!!!!!!!!!!!"
 else
     echo "already present !!!!!!!!!!!"
 fi
