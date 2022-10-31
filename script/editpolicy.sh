@@ -3,6 +3,7 @@ serviceRole=$1
 instanceRole=$2
 id=$3
 accountNumber=$4
+echo $PWD
 ex=$(aws kms get-key-policy --key-id  $id --policy-name default --output text > $PWD/policy.json)
 check=$(cat $PWD/script/policy.json | grep "arn:aws:iam::${accountNumber}:role/$instRole" | grep "arn:aws:iam::${accountNumber}:role/$serviceRole")
 
