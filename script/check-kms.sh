@@ -13,17 +13,16 @@ arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
 echo "Service Role Arn=$arn"
 
 "${instCheck[@]}" > myJson1.file
- arn1=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ') 
+ arn1=$(cat $PWD/myJson2.file | grep arn | awk '{print $2}' | tr '",' ' ') 
  echo "InstanceRole Arn=$arn1"
 ######################################
 myCmd1=(aws kms describe-key --key-id alias/$id)
 if "${myCmd1[@]}" > myJson.file 2> error.file; then
    echo "Present"
-    arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
-   echo "Arn=$arn"
+    kmsarn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
+    echo "KMS Arn=$kmsarn"
+    
     keyId=$(cat $PWD/myJson.file | grep "KeyId" | awk '{print $2}' | tr '",' ' ')
-
-
 
     sh $PWD/script/editpolicy.sh $roleName $instanceRole $keyId $accountNumber
 else
