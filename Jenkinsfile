@@ -24,7 +24,7 @@ pipeline {
         sh 'chmod +x ${WORKSPACE}/script/assumerole.sh'
         sh(script:'${WORKSPACE}/script/assumerole.sh', label: 'Get the assume role credentials')
         script {
-            def accountNumber = "895321766589"
+            def accountNumber = setVars()
             sh "echo ${accountNumber}"
             def assumeRoleOutputFile = "${WORKSPACE}/script/assume-role-output.json"
             env.AWS_ACCESS_KEY_ID = getCommandOutput("jq -r '.Credentials.AccessKeyId' ${assumeRoleOutputFile}", 'Get AccessKeyId')
