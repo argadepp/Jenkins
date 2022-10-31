@@ -1,17 +1,3 @@
-class MyVars {
-    private Map config = [
-        var1: "val1",
-        var2: "val2"
-    ]
-
-    String initializeEnvironmentVariables(final Script script) {
-        config.each { k,v ->
-            script.env."$k" = v
-        }
-
-        return "Initialization of env variables completed!"
-    }
-}
 
 
 
@@ -84,8 +70,3 @@ pipeline {
        
     }
 
-def setVars() {
-    travel-dev = "895321766589"
-    travel-qa = "895321766589"
-    travel-stage = "895321766589"
-}
