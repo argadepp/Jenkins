@@ -31,6 +31,8 @@ then
   if [ $? == 0 ]
   then
     echo "Succesfully updated !!!!!!!!!!!!!"
+    
+  fi  
 else
     echo "already present !!!!!!!!!!!"
 fi
