@@ -30,7 +30,7 @@ pipeline {
             sh(script: 'aws sts get-caller-identity', label: 'STS GetCallerIdentity')
         }
         }
-    }
+          }
       def getCommandOutput(command, label=null) {
     if (label == null) {
     label = command.split()[0]
