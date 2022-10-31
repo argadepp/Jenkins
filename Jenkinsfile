@@ -14,6 +14,7 @@ pipeline {
          string(name: 'aws_region', defaultValue: 'ap-south-1' , description: 'AWS Region' )
          string(name: 'stackName',defaultValue: 'asg')
          string(name: 'kmsKey' , defaultValue: 'eks-ebs-encrypt-key')
+         
 
     }  
     stages {
@@ -23,6 +24,7 @@ pipeline {
         sh 'chmod +x ${WORKSPACE}/script/assumerole.sh'
         sh(script:'${WORKSPACE}/script/assumerole.sh', label: 'Get the assume role credentials')
         script {
+            def accountNumber = setVars()
             def assumeRoleOutputFile = "${WORKSPACE}/script/assume-role-output.json"
             env.AWS_ACCESS_KEY_ID = getCommandOutput("jq -r '.Credentials.AccessKeyId' ${assumeRoleOutputFile}", 'Get AccessKeyId')
             env.AWS_SECRET_ACCESS_KEY = getCommandOutput("jq -r '.Credentials.SecretAccessKey' ${assumeRoleOutputFile}", 'Get SecretAccessKey')
@@ -61,3 +63,9 @@ pipeline {
     return sh(script: "${command}", label: label, returnStdout: true).trim()  
        
     }
+
+def setVars() {
+    env.dev = "895321766589"
+    env.qa = "895321766589"
+    env.stage = "895321766589"
+}
