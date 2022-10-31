@@ -48,11 +48,11 @@ pipeline {
                         echo "${serviceRole}"
               sh 'chmod +x ${WORKSPACE}/script/iamRoleCheck.sh'
                           
-              sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole} ${ClusterName} ${accountNumber} ")    
+              sh(script: "${WORKSPACE}/script/iamRoleCheck.sh ${serviceRole} ${instanceRole} ${ClusterName} ")    
               sh 'chmod +x ${WORKSPACE}/script/editpolicy.sh'            
               sh 'chmod +x ${WORKSPACE}/script/check-kms.sh'
               sh 'chmod 760 ${WORKSPACE}/script/*'            
-              sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey} ${serviceRole} ${instanceRole}")
+              sh(script: "${WORKSPACE}/script/check-kms.sh ${kmsKey} ${serviceRole} ${instanceRole} ${accountNumber} ")
                         
               }
             }
