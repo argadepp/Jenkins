@@ -1,8 +1,26 @@
+class MyVars {
+    private Map config = [
+        var1: "val1",
+        var2: "val2"
+    ]
+
+    String initializeEnvironmentVariables(final Script script) {
+        config.each { k,v ->
+            script.env."$k" = v
+        }
+
+        return "Initialization of env variables completed!"
+    }
+}
+
+
+
+
 pipeline {
     agent any
     environment {
         aws_region = "${params.aws_region}"
-        
+        def accountNumber = "895321766589"
     }
     parameters {
         
@@ -24,7 +42,7 @@ pipeline {
         sh 'chmod +x ${WORKSPACE}/script/assumerole.sh'
         sh(script:'${WORKSPACE}/script/assumerole.sh', label: 'Get the assume role credentials')
         script {
-            def accountNumber = setVars()
+           
             sh "echo ${accountNumber}"
             def assumeRoleOutputFile = "${WORKSPACE}/script/assume-role-output.json"
             env.AWS_ACCESS_KEY_ID = getCommandOutput("jq -r '.Credentials.AccessKeyId' ${assumeRoleOutputFile}", 'Get AccessKeyId')
@@ -34,7 +52,8 @@ pipeline {
         }
         } }
         stage('Check-Kms') {
-            steps {                      
+            steps {    
+                  sh "echo ${accountNumber}"
                   script { def ClusterName = "eks-${Product}-${environment}"
                         echo "${ClusterName}"
                     def instanceRole = "${ClusterName}-instance-role"  
@@ -66,7 +85,7 @@ pipeline {
     }
 
 def setVars() {
-    env.dev = "895321766589"
-    env.qa = "895321766589"
-    env.stage = "895321766589"
+    travel-dev = "895321766589"
+    travel-qa = "895321766589"
+    travel-stage = "895321766589"
 }
