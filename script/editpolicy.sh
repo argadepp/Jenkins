@@ -28,7 +28,7 @@ then
   
   echo $changePolicy
   
-  if [ $? == 0 ]
+  if [ $? -eq 0 ]
   then
     echo "Succesfully updated !!!!!!!!!!!!!"
     
