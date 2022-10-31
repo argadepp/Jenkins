@@ -18,13 +18,13 @@ echo "Service Role Arn=$arn"
 ######################################
 echo "PWD = $PWD!!!!!!!!!!!!!!!!!!"
 myCmd1=(aws kms describe-key --key-id alias/$id)
-if "${myCmd1[@]}" > $PWD/script/myJson.file 2> error.file; then
+if "${myCmd1[@]}" > $PWD/script/kms.file 2> error.file; then
    echo "Present"
    echo $PWD
-    kmsarn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
+    kmsarn=$(cat $PWD/script/kms.file | grep arn | awk '{print $2}' | tr '",' ' ')
     echo "KMS Arn=$kmsarn"
     
-    keyId=$(cat $PWD/myJson.file | grep "KeyId" | awk '{print $2}' | tr '",' ' ')
+    keyId=$(cat $PWD/script/kms.file | grep "KeyId" | awk '{print $2}' | tr '",' ' ')
 
     sh $PWD/script/editpolicy.sh $roleName $instanceRole $keyId $accountNumber
 else
