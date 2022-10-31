@@ -25,6 +25,7 @@ if "${myCmd1[@]}" > $PWD/script/kms.file 2> error.file; then
     echo "KMS Arn=$kmsarn"
     
     keyId=$(cat $PWD/script/kms.file | grep "KeyId" | awk '{print $2}' | tr '",' ' ')
+    echo $keyId
 
     sh $PWD/script/editpolicy.sh $roleName $instanceRole $keyId $accountNumber
 else
