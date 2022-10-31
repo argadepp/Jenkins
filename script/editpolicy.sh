@@ -1,9 +1,10 @@
 #!/bin/bash
-instRole=$1
-serviceRole=$2
+serviceRole=$1
+instanceRole=$2
 id=$3
 accountNumber=$4
-check=$(cat policy.json | grep "arn:aws:iam::${accountNumber}:role/$instRole" | grep "arn:aws:iam::${accountNumber}:role/$serviceRole")
+ex=$(aws kms get-key-policy --key-id  $id --policy-name default --output text > $PWD/script/policy.json)
+check=$(cat $PWD/script/policy.json | grep "arn:aws:iam::${accountNumber}:role/$instRole" | grep "arn:aws:iam::${accountNumber}:role/$serviceRole")
 
 echo "$?"
 echo $check
@@ -12,7 +13,7 @@ then
   echo $PWD
   inst=$(jq  '.Statement[1].Principal.AWS[]' $PWD/script/policy.json)
   echo $inst
-  instRole="arn:aws:iam::${accountNumber}:role/$instRole"
+  instRole="arn:aws:iam::${accountNumber}:role/$instanceRole"
   serviceRole="arn:aws:iam::${accountNumber}:role/$serviceRole"
   #perm=$(chmod 760 $PWD/script/*)
   newinst=$(jq '.Statement[2].Principal.AWS[.Statement[2].Principal.AWS | length] |= . + "'$instRole'"'  $PWD/script/policy.json > $PWD/script/new.json)
