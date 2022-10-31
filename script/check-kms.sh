@@ -13,7 +13,7 @@ arn=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ')
 echo "Service Role Arn=$arn"
 
 "${instCheck[@]}" > myJson1.file
- arn1=$(cat $PWD/myJson.file | grep arn | awk '{print $2}' | tr '",' ' ') 
+ arn1=$(cat $PWD/myJson1.file | grep arn | awk '{print $2}' | tr '",' ' ') 
  echo "InstanceRole Arn=$arn1"
 ######################################
 myCmd1=(aws kms describe-key --key-id alias/$id)
