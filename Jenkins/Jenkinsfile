@@ -6,7 +6,9 @@ pipeline {
     parameters {
         string(name: 'image',description: 'Pass the image path to build the docker image')
         string(name: 'tag',description: 'Pass the tag to build the docker image with tag')
-
+        string(name: 'user',description: 'Pass the image path to build the docker image',defaultValue: 'argadepp')
+        string(name: 'repo',description: 'Pass the tag to build the docker image with tag',defaultValue: 'ghcr.io')
+        string(name: 'pass',description: 'Pass the tag to build the docker image with tag')
     }    
     stages {
         stage('Chekout')
@@ -25,8 +27,10 @@ pipeline {
         // }
 
         stage('Build Docker') {
+
             steps {
                 script {
+                    buildDocker.dockerLogin("${user}","${repo}","${pass}")
                     buildDocker("${image}","${tag}",'.')
                 }
             }
