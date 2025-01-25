@@ -4,9 +4,9 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'Image',description: 'Pass the image path to build the docker image')
+        string(name: 'image',description: 'Pass the image path to build the docker image')
         string(name: 'tag',description: 'Pass the tag to build the docker image with tag')
-        
+
     }    
     stages {
         stage('Chekout')
@@ -27,7 +27,7 @@ pipeline {
         stage('Build Docker') {
             steps {
                 script {
-                    buildDocker('ghcr.io/argadepp/javaapp','v1','.')
+                    buildDocker(${image},${tag},'.')
                 }
             }
         }
