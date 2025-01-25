@@ -12,13 +12,13 @@ pipeline {
                 git url: 'https://github.com/argadepp/Spring-boot-docker-img.git'
             }
         }
-        stage('Build') {
-            steps {
-                script {
-                    buildApp('MyApp')
-                }
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         script {
+        //             buildApp('MyApp')
+        //         }
+        //     }
+        // }
 
         stage('Build Docker') {
             steps {
