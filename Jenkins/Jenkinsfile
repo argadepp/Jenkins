@@ -27,7 +27,7 @@ pipeline {
         stage('Build Docker') {
             steps {
                 script {
-                    buildDocker(${image},${tag},'.')
+                    buildDocker("${image}","${tag}",'.')
                 }
             }
         }
