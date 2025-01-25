@@ -19,6 +19,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Build Docker') {
+            steps {
+                script {
+                    buildDocker('ghcr.io/argadepp/javaapp','v1')
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 script {
