@@ -2,7 +2,13 @@
 
 pipeline {
     agent any
+
+    
     stages {
+        stage('Chekout')
+        {
+            git 'https://github.com/argadepp/Spring-boot-docker-img.git'
+        }
         stage('Build') {
             steps {
                 script {
