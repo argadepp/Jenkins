@@ -23,7 +23,7 @@ pipeline {
         stage('Build Docker') {
             steps {
                 script {
-                    buildDocker('ghcr.io/argadepp/javaapp','v1')
+                    buildDocker('ghcr.io/argadepp/javaapp','v1','.')
                 }
             }
         }
