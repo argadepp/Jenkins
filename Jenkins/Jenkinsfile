@@ -1,0 +1,28 @@
+@Library('shared-libarary@master') _
+
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    buildApp('MyApp')
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    deployApp('MyApp', 'staging')
+                }
+            }
+        }
+        stage('Notify') {
+            steps {
+                script {
+                    notifySlack('Deployment completed for MyApp', '#devops')
+                }
+            }
+        }
+    }
+}
