@@ -1,12 +1,15 @@
 pipeline {
-def props = readProperties file: 'params.properties'
+
 
     agent any
 
     stages{
         stage("fetch-props"){
             steps{
-              echo "Name is: ${props.name}"
+                script{
+                    def props = readProperties file: 'props.properties'
+                    echo "Name is ${props.name}"
+                }
             }
         }
     }
