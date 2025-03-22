@@ -1,36 +1,14 @@
 pipeline {
+
+
     agent any
 
-    stages {
-        stage('Verify Properties File') {
-            steps {
-                script {
-                    echo "Checking if params.properties exists..."
-                    sh "ls -l params.properties || echo 'File not found!'"
-                    
-                    echo "Contents of params.properties:"
-                    sh "cat params.properties"
-                }
-            }
-        }
-
-        stage('Read Properties Using Plugin') {
-            steps {
-                script {
-                    def props = readProperties file: 'Jenkins/params.properties'
-                    echo "Application Name: ${props['APP_NAME']}"
-                    echo "Version: ${props['VERSION']}"
-                    echo "Environment: ${props['ENVIRONMENT']}"
-                    echo "Database URL: ${props['DB_URL']}"
-                }
-            }
-        }
-
-        stage('Use Properties in Build') {
-            steps {
-                script {
-                    def props = readProperties file: 'params.properties'
-                    sh "echo 'Building ${props['APP_NAME']} version ${props['VERSION']} for ${props['ENVIRONMENT']} environment'"
+    stages{
+        stage("fetch-props"){
+            steps{
+                script{
+                    def props = readProperties file: 'Jenkins/parms.properties'
+                    echo "Name is ${props.APP_NAME}"
                 }
             }
         }
