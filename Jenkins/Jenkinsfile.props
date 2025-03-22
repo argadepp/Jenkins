@@ -5,14 +5,21 @@ pipeline {
         stage('Create Properties File') {
             steps {
                 script {
-                    def propertiesContent = """
-                    APP_NAME=MyApp
-                    VERSION=1.0.0
-                    ENVIRONMENT=dev
-                    DB_URL=jdbc:mysql://localhost:3306/mydb
-                    """
+                    def propertiesContent = """APP_NAME=MyApp
+VERSION=1.0.0
+ENVIRONMENT=dev
+DB_URL=jdbc:mysql://localhost:3306/mydb"""
                     writeFile file: 'params.properties', text: propertiesContent
                     echo "Properties file created."
+                }
+            }
+        }
+
+        stage('Verify Properties File') {
+            steps {
+                script {
+                    echo "Contents of params.properties:"
+                    sh "cat params.properties"
                 }
             }
         }
@@ -21,10 +28,10 @@ pipeline {
             steps {
                 script {
                     def props = readProperties file: 'params.properties'
-                    echo "Application Name: ${props.APP_NAME}"
-                    echo "Version: ${props.VERSION}"
-                    echo "Environment: ${props.ENVIRONMENT}"
-                    echo "Database URL: ${props.DB_URL}"
+                    echo "Application Name: ${props['APP_NAME']}"
+                    echo "Version: ${props['VERSION']}"
+                    echo "Environment: ${props['ENVIRONMENT']}"
+                    echo "Database URL: ${props['DB_URL']}"
                 }
             }
         }
@@ -33,7 +40,7 @@ pipeline {
             steps {
                 script {
                     def props = readProperties file: 'params.properties'
-                    sh "echo 'Building ${props.APP_NAME} version ${props.VERSION} for ${props.ENVIRONMENT} environment'"
+                    sh "echo 'Building ${props['APP_NAME']} version ${props['VERSION']} for ${props['ENVIRONMENT']} environment'"
                 }
             }
         }
