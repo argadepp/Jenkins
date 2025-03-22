@@ -7,7 +7,7 @@ pipeline {
         stage("fetch-props"){
             steps{
                 script{
-                    def props = readProperties file: 'Jenkins/parms.properties'
+                    def props = readProperties file: 'Jenkins/params.properties'
                     echo "Name is ${props.APP_NAME}"
                 }
             }
