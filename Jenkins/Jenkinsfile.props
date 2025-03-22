@@ -2,22 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Create Properties File') {
-            steps {
-                script {
-                    def propertiesContent = """APP_NAME=MyApp
-VERSION=1.0.0
-ENVIRONMENT=dev
-DB_URL=jdbc:mysql://localhost:3306/mydb"""
-                    writeFile file: 'params.properties', text: propertiesContent
-                    echo "Properties file created."
-                }
-            }
-        }
-
         stage('Verify Properties File') {
             steps {
                 script {
+                    echo "Checking if params.properties exists..."
+                    sh "ls -l params.properties || echo 'File not found!'"
+                    
                     echo "Contents of params.properties:"
                     sh "cat params.properties"
                 }
@@ -27,7 +17,7 @@ DB_URL=jdbc:mysql://localhost:3306/mydb"""
         stage('Read Properties Using Plugin') {
             steps {
                 script {
-                    def props = readProperties file: 'params.properties'
+                    def props = readProperties file: 'Jenkins/params.properties'
                     echo "Application Name: ${props['APP_NAME']}"
                     echo "Version: ${props['VERSION']}"
                     echo "Environment: ${props['ENVIRONMENT']}"
